@@ -12,6 +12,7 @@ cmake-build-*/
 
 # IntelliJ
 out/
+target/
 
 .idea/
 
