@@ -1,17 +1,20 @@
 package org.foodamate.careers.com;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class NetworkTest {
 
-    private final APIConnection apiConnection = new APIConnection();
+    private final static APIConnection apiConnection = new APIConnection("http://sam-user-activity.eu-west-1.elasticbeanstalk.com/");
 
-    @Test
-    void apiRunning() {
-        apiConnection.setUrl("http://sam-user-activity.eu-west-1.elasticbeanstalk.com/");
+    @BeforeAll
+    static void retrieveAPIContents() {
         apiConnection.retrieveAPIContents();
+    }
+    @Test
+    void ableToConnectWithApi() {
         assertTrue(apiConnection.isConnected());
     }
 
