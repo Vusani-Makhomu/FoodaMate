@@ -1,10 +1,6 @@
 package org.foodamate.careers.com;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -36,9 +32,9 @@ public class Main {
         try(java.io.InputStream is = new java.net.URL(api).openStream()) {
             System.out.println("***Data fetched successfully***");
             String contents = new String(is.readAllBytes());
-            JsonElement element = JsonParser.parseString(contents);
-            Object[] apiData = element.getAsJsonObject().entrySet().toArray();
-            String[] apiStringData = Arrays.stream(apiData).map(Object::toString).toArray(String[]::new);
+            ParseAPIContents parseAPIContents = new ParseAPIContents(contents);
+            parseAPIContents.parseApiData();
+            String[] apiStringData = parseAPIContents.getParsedApiData();
             boolean specifiedDateRange = args.length != 0;
             String startDate="";
             String endDate="";
