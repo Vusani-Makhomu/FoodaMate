@@ -55,4 +55,10 @@ public class Graph {
     public List<String> returnResultGraph() {
         return new ArrayList<>(resultGraph);
     }
+
+    public String graphDateRangeInformation() {
+        return "\n***Graph information***\n"+
+                "Start Date: "+startDate+"\n"+
+                "End Date: "+endDate+"\n\n";
+    }
 }
