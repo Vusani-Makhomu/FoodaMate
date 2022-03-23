@@ -35,9 +35,11 @@ public class GraphTest {
         assertEquals(285800.0, graph.calculateGraphTotalValue());
     }
 
-//    @Test
-//    void incorrectGraphTotal() {
-//
-//    }
+    @Test
+    void incorrectGraphTotal() {
+        graph.setStartDate("01-01-2022");
+        graph.setEndDate("15-01-2022");
+        assertNotEquals(0.0, graph.calculateGraphTotalValue());
+    }
 
 }
