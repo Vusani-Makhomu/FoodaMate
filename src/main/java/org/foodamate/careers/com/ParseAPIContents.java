@@ -10,6 +10,14 @@ public class ParseAPIContents {
         apiData = contents;
     }
 
+    public ParseAPIContents() {
+
+    }
+
+    public void setApiData(String apiData) {
+        this.apiData = apiData;
+    }
+
     private void removeCurlyBraces() {
         apiData = apiData.replace("{", "");
         apiData = apiData.replace("}", "");
