@@ -15,8 +15,15 @@ public class Main {
     public static void main(String[] args) {
 
         if (args.length == 1) {
-            if (args[0] == "help") {
-                System.out.println("The user is looking for help");
+            if (args[0].equals("help")) {
+                System.out.println("usage of Main.java {start-date} {end-date}");
+                System.out.println("Where {start-date} and {end-date} are optional arguments.");
+                System.out.println("One could choose to run the program without these arguments. The command would be as follows:");
+                System.out.println("javac Main.java");
+                System.out.println("If one decides to run the program with these commands, the command would be as follows:");
+                System.out.println("javac Main.java 01-04-2022 10-08-2022");
+                System.out.println("Where 01-04-2022 represent the start date and 10-08-2022 represent the end date.");
+                System.out.println("Note that this date range is inclusive. Meaning that 10-08-2022 will be included in the plotted graph.");
                 return;
             }
         }
