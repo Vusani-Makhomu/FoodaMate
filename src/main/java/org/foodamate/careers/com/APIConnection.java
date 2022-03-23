@@ -12,6 +12,11 @@ public class APIConnection {
     public APIConnection(String url) {
         this.url = url;
     }
+    public APIConnection() {}
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public void retrieveAPIContents() {
         try (InputStream inputStream = new URL(url).openStream()) {
