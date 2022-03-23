@@ -1,8 +1,5 @@
 package org.foodamate.careers.com;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -12,35 +9,35 @@ import java.util.List;
 
 public class Main {
 
+    public static String helpMessage() {
+        return "\nUsage of Main.java {start-date} {end-date}\n\n"+
+                "Where {start-date} and {end-date} are optional arguments.\n"+
+                "One could choose to run the program without these arguments. The command would be as follows:\n"+
+                "javac org.foodamate.careers.com.Main.java\n\n"+
+                "If one decides to run the program with these commands, the command would be as follows:\n"+
+                "javac org.foodamate.careers.com.Main.java 01-04-2022 10-08-2022\n\n"+
+                "Where 01-04-2022 represent the start date and 10-08-2022 represent the end date.\n"+
+                "Note that this date range is inclusive. Meaning that 10-08-2022 will be included in the plotted graph.\n\n";
+    }
+
     public static void main(String[] args) {
 
         if (args.length == 1) {
             if (args[0].equals("help")) {
-                System.out.println();
-                System.out.println("usage of org.foodamate.careers.com.Main.java {start-date} {end-date}");
-                System.out.println();
-                System.out.println("Where {start-date} and {end-date} are optional arguments.");
-                System.out.println("One could choose to run the program without these arguments. The command would be as follows:");
-                System.out.println("javac org.foodamate.careers.com.Main.java");
-                System.out.println();
-                System.out.println("If one decides to run the program with these commands, the command would be as follows:");
-                System.out.println("javac org.foodamate.careers.com.Main.java 01-04-2022 10-08-2022");
-                System.out.println();
-                System.out.println("Where 01-04-2022 represent the start date and 10-08-2022 represent the end date.");
-                System.out.println("Note that this date range is inclusive. Meaning that 10-08-2022 will be included in the plotted graph.");
-                System.out.println();
+                System.out.println(helpMessage());
                 return;
             }
         }
 
         System.out.println("***Fetching data from  API***");
         System.out.println();
-        String api = "http://sam-user-activity.eu-west-1.elasticbeanstalk.com/";
-        try(java.io.InputStream is = new java.net.URL(api).openStream()) {
+        String apiUrl = "http://sam-user-activity.eu-west-1.elasticbeanstalk.com/";
+        APIConnection apiConnection = new APIConnection(apiUrl);
+        apiConnection.retrieveAPIContents();
+        if (apiConnection.isConnected()) {
             System.out.println("***Data fetched successfully***");
             System.out.println();
-            String contents = new String(is.readAllBytes());
-            ParseAPIContents parseAPIContents = new ParseAPIContents(contents);
+            ParseAPIContents parseAPIContents = new ParseAPIContents(apiConnection.getApiContents());
             parseAPIContents.parseApiData();
             String[] apiStringData = parseAPIContents.getParsedApiData();
             boolean specifiedDateRange = args.length != 0;
@@ -53,11 +50,8 @@ public class Main {
                 startDate = apiStringData[0].split("=")[0].strip();
                 endDate = apiStringData[apiStringData.length-1].split("=")[0].strip();
             }
-            System.out.println("***Graph information***");
-            System.out.println("Start Date: "+startDate);
-            System.out.println("End Date: "+endDate);
-            System.out.println();
             Graph graph = new Graph(apiStringData, startDate, endDate);
+            System.out.println(graph.graphDateRangeInformation());
             System.out.println("***Plotting graph***");
             System.out.println();
             graph.plotGraph();
@@ -68,11 +62,10 @@ public class Main {
             System.out.println();
             System.out.println("***Graph plotted successfully***");
             System.out.println();
-        } catch (IOException e) {
-            System.out.println("***An error occurred. Program failed to fetch data from API***");
-            System.out.println("***Please try again.***");
+        }
+        else {
             System.out.println();
-            System.out.println("***If error persists, please check if the API is running:"+api+"***");
+            System.out.println(apiConnection.errorMessage());
             System.out.println();
         }
     }
