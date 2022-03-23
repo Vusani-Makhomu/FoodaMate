@@ -1,6 +1,8 @@
 package org.foodamate.careers.com;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -46,7 +48,7 @@ public class Main {
                 endDate = apiStringData[apiStringData.length-1].split("=")[0].strip();
             }
             System.out.println();
-            System.out.println("***org.foodamate.careers.com.Graph information***");
+            System.out.println("***Graph information***");
             System.out.println("Start Date: "+startDate);
             System.out.println("End Date: "+endDate);
             System.out.println();
@@ -59,7 +61,7 @@ public class Main {
                 System.out.println(graphLine);
             }
             System.out.println();
-            System.out.println("***org.foodamate.careers.com.Graph plotted successfully***");
+            System.out.println("***Graph plotted successfully***");
             System.out.println();
         } catch (IOException e) {
             System.out.println("***An error occurred. Program failed to fetch data from API***");
@@ -68,5 +70,91 @@ public class Main {
             System.out.println("***If error persists, please check if the API is running:"+api+"***");
             System.out.println();
         }
+    }
+}
+
+class Graph {
+    private final String[] graphData;
+    private final List<String> resultGraph = new ArrayList<>();
+    private final String startDate;
+    private final String endDate;
+
+    public Graph(String[] data, String startDate, String endDate) {
+        graphData = data;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    public double calculateGraphTotalValue() {
+        double result = 0;
+        boolean start = false;
+        for (String eachDataSet : graphData) {
+            String[] data = eachDataSet.split("=");
+            String dataDate = data[0].strip();
+            if (dataDate.equals(startDate)) start = true;
+            if (start) {
+                double dataValue = Double.parseDouble(data[1]);
+                result += dataValue;
+            }
+            if (dataDate.equals(endDate)) start = false;
+        }
+        return result;
+    }
+
+    public String returnNumAsterisks(int num) {
+        return "*".repeat(num);
+    }
+
+    public void plotGraph() {
+        double totalValue = calculateGraphTotalValue();
+        boolean start = false;
+        for (String eachDataSet: graphData) {
+            String[] data = eachDataSet.split("=");
+            String dataDate = data[0].strip();
+            if (dataDate.equals(startDate)) start = true;
+            if (start) {
+                double dataValue = Double.parseDouble(data[1]);
+                double percentage = (dataValue/totalValue)*100;
+                int intPercentage = (int) Math.ceil(percentage);
+                String graphPlotLine = dataDate + ": " + (returnNumAsterisks(intPercentage)) + " " + (intPercentage) + "%";
+                resultGraph.add(graphPlotLine);
+            }
+            if (dataDate.equals(endDate)) start = false;
+        }
+    }
+    public List<String> returnResultGraph() {
+        return new ArrayList<>(resultGraph);
+    }
+}
+
+class ParseAPIContents {
+    private String apiData;
+    private String[] parsedApiData;
+
+    public ParseAPIContents(String contents) {
+        apiData = contents;
+    }
+
+    private void removeCurlyBraces() {
+        apiData = apiData.replace("{", "");
+        apiData = apiData.replace("}", "");
+        apiData = apiData.strip();
+    }
+
+    private String[] returnDataInArray() {
+        return apiData.split(",");
+    }
+
+    public void parseApiData() {
+        removeCurlyBraces();
+        parsedApiData = returnDataInArray();
+        for (int index=0;index<parsedApiData.length;index++) {
+            parsedApiData[index] = parsedApiData[index].replace("\"", "").strip();
+            parsedApiData[index] = parsedApiData[index].replace(":", "=");
+        }
+    }
+
+    public String[] getParsedApiData() {
+        return Arrays.copyOf(parsedApiData, parsedApiData.length);
     }
 }
