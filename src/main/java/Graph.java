@@ -2,10 +2,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Graph {
-    private String[] graphData;
-    private List<String> resultGraph = new ArrayList<>();
-    private String startDate;
-    private String endDate;
+    private final String[] graphData;
+    private final List<String> resultGraph = new ArrayList<>();
+    private final String startDate;
+    private final String endDate;
 
     public Graph(String[] data, String startDate, String endDate) {
         graphData = data;
@@ -49,8 +49,6 @@ public class Graph {
             }
             if (dataDate.equals(endDate)) start = false;
         }
-
-
     }
     public List<String> returnResultGraph() {
         return new ArrayList<>(resultGraph);
