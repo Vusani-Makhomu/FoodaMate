@@ -1,3 +1,5 @@
+package org.foodamate.careers.com;
+
 import java.util.ArrayList;
 import java.util.List;
 

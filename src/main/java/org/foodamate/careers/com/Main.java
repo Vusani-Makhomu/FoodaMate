@@ -1,3 +1,5 @@
+package org.foodamate.careers.com;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
@@ -16,12 +18,12 @@ public class Main {
 
         if (args.length == 1) {
             if (args[0].equals("help")) {
-                System.out.println("usage of Main.java {start-date} {end-date}");
+                System.out.println("usage of org.foodamate.careers.com.Main.java {start-date} {end-date}");
                 System.out.println("Where {start-date} and {end-date} are optional arguments.");
                 System.out.println("One could choose to run the program without these arguments. The command would be as follows:");
-                System.out.println("javac Main.java");
+                System.out.println("javac org.foodamate.careers.com.Main.java");
                 System.out.println("If one decides to run the program with these commands, the command would be as follows:");
-                System.out.println("javac Main.java 01-04-2022 10-08-2022");
+                System.out.println("javac org.foodamate.careers.com.Main.java 01-04-2022 10-08-2022");
                 System.out.println("Where 01-04-2022 represent the start date and 10-08-2022 represent the end date.");
                 System.out.println("Note that this date range is inclusive. Meaning that 10-08-2022 will be included in the plotted graph.");
                 return;
@@ -48,7 +50,7 @@ public class Main {
                 endDate = apiStringData[apiStringData.length-1].split("=")[0].strip();
             }
             System.out.println();
-            System.out.println("***Graph information***");
+            System.out.println("***org.foodamate.careers.com.Graph information***");
             System.out.println("Start Date: "+startDate);
             System.out.println("End Date: "+endDate);
             System.out.println();
@@ -61,7 +63,7 @@ public class Main {
                 System.out.println(graphLine);
             }
             System.out.println();
-            System.out.println("***Graph plotted successfully***");
+            System.out.println("***org.foodamate.careers.com.Graph plotted successfully***");
             System.out.println();
         } catch (IOException e) {
             System.out.println("***An error occurred. Program failed to fetch data from API***");
