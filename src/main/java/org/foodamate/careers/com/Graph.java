@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Graph {
-    private final String[] graphData;
+    private String[] graphData;
     private final List<String> resultGraph = new ArrayList<>();
-    private final String startDate;
-    private final String endDate;
+    private String startDate;
+    private String endDate;
 
     public Graph(String[] data, String startDate, String endDate) {
         graphData = data;
@@ -15,15 +15,31 @@ public class Graph {
         this.endDate = endDate;
     }
 
-    public double calculateGraphTotalValue() {
-        double result = 0;
+    public Graph() {
+
+    }
+
+    public void setGraphData(String[] data) {
+        this.graphData = data;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public long calculateGraphTotalValue() {
+        long result = 0;
         boolean start = false;
         for (String eachDataSet : graphData) {
             String[] data = eachDataSet.split("=");
             String dataDate = data[0].strip();
             if (dataDate.equals(startDate)) start = true;
             if (start) {
-                double dataValue = Double.parseDouble(data[1]);
+                long dataValue = Long.parseLong(data[1]);
                 result += dataValue;
             }
             if (dataDate.equals(endDate)) start = false;
