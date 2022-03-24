@@ -1,5 +1,6 @@
 package org.foodamate.careers.com;
 
+import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -38,6 +39,7 @@ public class Main {
             ParseAPIContents parseAPIContents = new ParseAPIContents(apiConnection.getApiContents());
             parseAPIContents.parseApiData();
             String[] apiStringData = parseAPIContents.getParsedApiData();
+            System.out.println("Here is the parsed api data: "+ Arrays.toString(apiStringData));
             boolean specifiedDateRange = args.length != 0;
             String startDate="";
             String endDate="";
@@ -50,11 +52,7 @@ public class Main {
             }
             Graph graph = new Graph(apiStringData, startDate, endDate);
             graph.extractUserBaseAndDateValues();
-            System.out.println("UserBase values: "+graph.getUserBaseValues());
-            System.out.println("Date values: "+graph.getDateValues());
             graph.calculatePercentageIncrease();
-            System.out.println("Percentage Increase: "+graph.getPercentageIncreaseList());
-            System.out.println();
             System.out.println(graph.graphDateRangeInformation());
             graph.plotGraph();
             List<String> resultGraph = graph.getResultGraph();
