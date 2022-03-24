@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Graph {
-    private String[] graphData;
+    private String[] apiData;
     private final List<String> resultGraph = new ArrayList<>();
     private String startDate;
     private String endDate;
+    private final List<Long> userBaseValues = new ArrayList<>();
+    private final List<String> dateValues = new ArrayList<>();
+    private final List<Integer> percentageIncreaseList = new ArrayList<>();
+
 
     public Graph(String[] data, String startDate, String endDate) {
-        graphData = data;
+        apiData = data;
         this.startDate = startDate;
         this.endDate = endDate;
     }
@@ -19,8 +23,8 @@ public class Graph {
 
     }
 
-    public void setGraphData(String[] data) {
-        this.graphData = data;
+    public void setApiData(String[] data) {
+        this.apiData = data;
     }
 
     public void setStartDate(String startDate) {
@@ -31,20 +35,29 @@ public class Graph {
         this.endDate = endDate;
     }
 
-    public long calculateGraphTotalValue() {
-        long result = 0;
-        boolean start = false;
-        for (String eachDataSet : graphData) {
+    public void extractUserBaseAndDateValues() {
+        for (String eachDataSet : apiData) {
             String[] data = eachDataSet.split("=");
             String dataDate = data[0].strip();
-            if (dataDate.equals(startDate)) start = true;
-            if (start) {
-                long dataValue = Long.parseLong(data[1]);
-                result += dataValue;
-            }
-            if (dataDate.equals(endDate)) start = false;
+            Long dataValue = Long.parseLong(data[1]);
+            userBaseValues.add(dataValue);
+            dateValues.add(dataDate);
         }
-        return result;
+    }
+
+    public void calculatePercentageIncrease() {
+        double originalNumber = 0;
+        if (userBaseValues.size() > 0) originalNumber = userBaseValues.get(0);
+        for (int index=0; index<userBaseValues.size(); index++) {
+            if (index+1 <= userBaseValues.size()) {
+                double newNumber = userBaseValues.get(index);
+                double increase = newNumber-originalNumber;
+                double percentageIncrease = (increase/originalNumber) * 100;
+                int roundedPercentageIncrease = (int) Math.ceil(percentageIncrease);
+                percentageIncreaseList.add(roundedPercentageIncrease);
+                originalNumber = newNumber;
+            }
+        }
     }
 
     public String returnNumAsterisks(int num) {
@@ -52,20 +65,17 @@ public class Graph {
     }
 
     public void plotGraph() {
-        double totalValue = calculateGraphTotalValue();
         boolean start = false;
-        for (String eachDataSet: graphData) {
-            String[] data = eachDataSet.split("=");
-            String dataDate = data[0].strip();
-            if (dataDate.equals(startDate)) start = true;
-            if (start) {
-                double dataValue = Double.parseDouble(data[1]);
-                double percentage = (dataValue/totalValue)*100;
-                int intPercentage = (int) Math.ceil(percentage);
-                String graphPlotLine = dataDate + ": " + (returnNumAsterisks(intPercentage)) + " " + (intPercentage) + "%";
-                resultGraph.add(graphPlotLine);
+        for (int index=0; index<percentageIncreaseList.size(); index++) {
+            String currentDate = dateValues.get(index);
+            if (currentDate.equals(startDate)) start = true;
+            else if (start) {
+                int percentageIncrease = percentageIncreaseList.get(index);
+                String graphLine = dateValues.get(index) + ": " + (returnNumAsterisks(percentageIncrease)) + " " + percentageIncrease + "%";
+                resultGraph.add(graphLine);
             }
-            if (dataDate.equals(endDate)) start = false;
+            if (currentDate.equals(endDate)) start = false;
+
         }
     }
     public List<String> returnResultGraph() {
