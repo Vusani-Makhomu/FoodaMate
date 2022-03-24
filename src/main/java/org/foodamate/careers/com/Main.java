@@ -50,10 +50,14 @@ public class Main {
             }
             Graph graph = new Graph(apiStringData, startDate, endDate);
             graph.extractUserBaseAndDateValues();
+            System.out.println("UserBase values: "+graph.getUserBaseValues());
+            System.out.println("Date values: "+graph.getDateValues());
             graph.calculatePercentageIncrease();
+            System.out.println("Percentage Increase: "+graph.getPercentageIncreaseList());
+            System.out.println();
             System.out.println(graph.graphDateRangeInformation());
             graph.plotGraph();
-            List<String> resultGraph = graph.returnResultGraph();
+            List<String> resultGraph = graph.getResultGraph();
             for (String graphLine: resultGraph) {
                 System.out.println(graphLine);
             }
