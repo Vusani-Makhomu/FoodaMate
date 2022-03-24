@@ -30,13 +30,11 @@ public class Main {
         }
 
         System.out.println("***Fetching data from  API***");
-        System.out.println();
         String apiUrl = "http://sam-user-activity.eu-west-1.elasticbeanstalk.com/";
         APIConnection apiConnection = new APIConnection(apiUrl);
         apiConnection.retrieveAPIContents();
         if (apiConnection.isConnected()) {
             System.out.println("***Data fetched successfully***");
-            System.out.println();
             ParseAPIContents parseAPIContents = new ParseAPIContents(apiConnection.getApiContents());
             parseAPIContents.parseApiData();
             String[] apiStringData = parseAPIContents.getParsedApiData();
@@ -54,16 +52,11 @@ public class Main {
             graph.extractUserBaseAndDateValues();
             graph.calculatePercentageIncrease();
             System.out.println(graph.graphDateRangeInformation());
-            System.out.println("***Plotting graph***");
-            System.out.println();
             graph.plotGraph();
             List<String> resultGraph = graph.returnResultGraph();
             for (String graphLine: resultGraph) {
                 System.out.println(graphLine);
             }
-            System.out.println();
-            System.out.println("***Graph plotted successfully***");
-            System.out.println();
         }
         else {
             System.out.println();

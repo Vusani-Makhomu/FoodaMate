@@ -100,6 +100,6 @@ public class Graph {
     public String graphDateRangeInformation() {
         return "\n***Graph information***\n"+
                 "Start Date: "+ startDateValue +"\n"+
-                "End Date: "+ endDateValue +"\n\n";
+                "End Date: "+ endDateValue +"\n";
     }
 }
