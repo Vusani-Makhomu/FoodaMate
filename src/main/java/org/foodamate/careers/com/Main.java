@@ -51,6 +51,8 @@ public class Main {
                 endDate = apiStringData[apiStringData.length-1].split("=")[0].strip();
             }
             Graph graph = new Graph(apiStringData, startDate, endDate);
+            graph.extractUserBaseAndDateValues();
+            graph.calculatePercentageIncrease();
             System.out.println(graph.graphDateRangeInformation());
             System.out.println("***Plotting graph***");
             System.out.println();
