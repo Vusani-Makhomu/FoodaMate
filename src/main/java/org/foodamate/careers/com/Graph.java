@@ -1,7 +1,6 @@
 package org.foodamate.careers.com;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Graph {
@@ -56,12 +55,6 @@ public class Graph {
                 double percentageIncrease = (increase/originalNumber) * 100;
                 int roundedPercentageIncrease = (int) Math.ceil(percentageIncrease);
                 percentageIncreaseList.add(roundedPercentageIncrease);
-                System.out.println();
-                System.out.println("New number: "+newNumber);
-                System.out.println("Increase: "+increase);
-                System.out.println("Percentage increase: "+percentageIncrease);
-                System.out.println("Original number: "+originalNumber);
-                System.out.println();
                 originalNumber = newNumber;
             }
         }
