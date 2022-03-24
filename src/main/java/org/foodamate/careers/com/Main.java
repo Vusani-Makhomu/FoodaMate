@@ -71,7 +71,8 @@ public class Main {
             * 10. Print out the graph date range information to the console.
             * 11. Plot the graph.
             * 12. Retrieve the plotted graph from the graph object.
-            * 13. Display the plotted graph on the console.
+            * 13. Check if graph was plotted for specified date range. If not, let user know and halt execution.
+            * 14. Display the plotted graph on the console.
             * */
             System.out.println("***Data fetched successfully***");
 
@@ -123,6 +124,13 @@ public class Main {
             List<String> resultGraph = graph.getResultGraph();
 
             // 13.
+            if (resultGraph.size() == 0) {
+                System.out.println("Graph couldn't be plotted");
+                System.out.println("Reason: No user base data for specified date range.");
+                return;
+            }
+
+            // 14.
             for (String graphLine: resultGraph) {
                 System.out.println(graphLine);
             }
