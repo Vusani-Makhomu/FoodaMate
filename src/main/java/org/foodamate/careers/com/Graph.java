@@ -3,6 +3,7 @@ package org.foodamate.careers.com;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Graph {
     private String[] apiData;
     private final List<String> resultGraph = new ArrayList<>();
@@ -36,6 +37,8 @@ public class Graph {
     }
 
     public void extractUserBaseAndDateValues() {
+        userBaseValues.clear();
+        dateValues.clear();
         for (String eachDataSet : apiData) {
             String[] data = eachDataSet.split("=");
             String dataDate = data[0].strip();
@@ -45,7 +48,16 @@ public class Graph {
         }
     }
 
+    public List<Long> getUserBaseValues() {
+        return userBaseValues;
+    }
+
+    public List<String> getDateValues() {
+        return dateValues;
+    }
+
     public void calculatePercentageIncrease() {
+        percentageIncreaseList.clear();
         double originalNumber = 0;
         if (userBaseValues.size() > 0) originalNumber = userBaseValues.get(0);
         for (int index=0; index<userBaseValues.size(); index++) {
@@ -60,28 +72,32 @@ public class Graph {
         }
     }
 
+    public List<Integer> getPercentageIncreaseList() {
+        return new ArrayList<>(percentageIncreaseList);
+    }
+
     public String returnNumAsterisks(int num) {
         return "*".repeat(num);
     }
 
     public void plotGraph() {
         boolean start = false;
+        resultGraph.clear();
         for (int index=0; index<percentageIncreaseList.size(); index++) {
             String currentDateValue = dateValues.get(index);
             long userBaseValue = userBaseValues.get(index);
             if (currentDateValue.equals(startDateValue)) start = true;
             if (start) {
                 int percentageIncrease = percentageIncreaseList.get(index);
-                String graphLine = dateValues.get(index) + ": " + (returnNumAsterisks(divide(userBaseValue)))+
+                String graphLine = dateValues.get(index) + ": " + (returnNumAsterisks(extractFirstTwoDigits(userBaseValue)))+
                         " (" + userBaseValue + ") " + percentageIncrease + "%";
                 resultGraph.add(graphLine);
             }
             if (currentDateValue.equals(endDateValue)) start = false;
-
         }
     }
 
-    public int divide(long num) {
+    public int extractFirstTwoDigits(long num) {
         String[] digits = String.valueOf(num).split("");
         int result;
         if (digits.length >= 3) {
@@ -93,7 +109,7 @@ public class Graph {
         }
         return result;
     }
-    public List<String> returnResultGraph() {
+    public List<String> getResultGraph() {
         return new ArrayList<>(resultGraph);
     }
 
