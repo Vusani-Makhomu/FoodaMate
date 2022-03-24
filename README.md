@@ -50,3 +50,6 @@ the number of asterisks on screen will never exceed 100.
 
 The calling code then retrieves the plotted graph and prints it on the console. This is done by printing out each line of 
 the graph.
+
+![Foodamate_Repo_Cover](https://user-images.githubusercontent.com/79424556/160018558-b6946285-0082-4e34-8f4f-b85a8442f2b1.jpg)
+
