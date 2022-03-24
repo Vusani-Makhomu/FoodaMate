@@ -6,19 +6,25 @@ How to run the program locally:
 1. Open the command line in the java directory of the project (Figure 1.1 in diagrams.pdf)
 2. Enter the command: javac org/foodamate/careers/com/Main.java (Figure 1.2 in diagrams.pdf)
    [Note: The purpose of the command entered at 2. is to compile the main.java program]
-3. Enter the command: java org/foodamate/careers/com/Main (Figure 1.3 in diagrams.pdf)
+3. Verify that the program compiled successfully by checking if .class files were generated. (APIConnection.class, Graph.class, Main.class and ParseAPIContents.class)
+   [Note: Take a look at Figure 1.3 in diagrams.pdf]
+4. Enter the command: java org/foodamate/careers/com/Main (Figure 1.4 in diagrams.pdf)
+   The program produced by your program might differ from the program in diagrams.pdf depending on the data from the API.
    [Note: The purpose of the command entered at 3. is to run the program that was compiled at 2.]
-4. This will execute the program using the default date range.
+5. This will execute the program using the default date range.
    [Note: Read "how it work" to know more about the default date range.]
-5. The program (main.java) has a help feature which can be useful for knowing more about how to use the program
-6. To use the help feature, simply enter the command (assuming that you have done step 2.): java org/foodamate/careers/com/Main help
-7. To execute the program with specific date range, enter the command (assuming that you have done step 2.): 
+6. The program (main.java) has a help feature which can be useful for knowing more about how to use the program
+7. To use the help feature, simply enter the command (assuming that you have done step 2.): java org/foodamate/careers/com/Main help
+   [Figure 1.5 in diagrams.pdf]
+8. To execute the program with specific date range, enter the command (assuming that you have done step 2.): 
    java org/foodamate/careers/com/Main [start_date] [end_date]
    [Note: [start_date] represent the start date that you want, the same is true of [end_date]]]
    Here is an example with real date. start date is 10-01-2022 and end date is 15-01-2022. The command would be:
    java org/foodamate/careers/com/Main 10-01-2022 15-01-2022
-8. If there is no data for the specified data range and therefore cannot plot the graph, 
+   [Figure 1.6 in diagrams.pdf]
+9. If there is no data for the specified data range and therefore cannot plot the graph, 
     the program will let you know.
+   [Figure 1.7 in diagrams.pdf]
 
 
 How it works:
