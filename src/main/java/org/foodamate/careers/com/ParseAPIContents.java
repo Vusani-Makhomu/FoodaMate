@@ -19,8 +19,8 @@ public class ParseAPIContents {
     }
 
     private void removeCurlyBraces() {
-        apiData = apiData.replace("{", "");
-        apiData = apiData.replace("}", "");
+        if (apiData.contains("{")) apiData = apiData.replace("{", "");
+        if (apiData.contains("}")) apiData = apiData.replace("}", "");
         apiData = apiData.strip();
     }
 
