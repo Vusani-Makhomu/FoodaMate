@@ -1,22 +1,23 @@
 package org.foodamate.careers.com;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Graph {
     private String[] apiData;
     private final List<String> resultGraph = new ArrayList<>();
-    private String startDate;
-    private String endDate;
+    private String startDateValue;
+    private String endDateValue;
     private final List<Long> userBaseValues = new ArrayList<>();
     private final List<String> dateValues = new ArrayList<>();
     private final List<Integer> percentageIncreaseList = new ArrayList<>();
 
 
-    public Graph(String[] data, String startDate, String endDate) {
+    public Graph(String[] data, String startDateValue, String endDateValue) {
         apiData = data;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startDateValue = startDateValue;
+        this.endDateValue = endDateValue;
     }
 
     public Graph() {
@@ -27,12 +28,12 @@ public class Graph {
         this.apiData = data;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
+    public void setStartDateValue(String startDateValue) {
+        this.startDateValue = startDateValue;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setEndDateValue(String endDateValue) {
+        this.endDateValue = endDateValue;
     }
 
     public void extractUserBaseAndDateValues() {
@@ -55,6 +56,12 @@ public class Graph {
                 double percentageIncrease = (increase/originalNumber) * 100;
                 int roundedPercentageIncrease = (int) Math.ceil(percentageIncrease);
                 percentageIncreaseList.add(roundedPercentageIncrease);
+                System.out.println();
+                System.out.println("New number: "+newNumber);
+                System.out.println("Increase: "+increase);
+                System.out.println("Percentage increase: "+percentageIncrease);
+                System.out.println("Original number: "+originalNumber);
+                System.out.println();
                 originalNumber = newNumber;
             }
         }
@@ -67,16 +74,31 @@ public class Graph {
     public void plotGraph() {
         boolean start = false;
         for (int index=0; index<percentageIncreaseList.size(); index++) {
-            String currentDate = dateValues.get(index);
-            if (currentDate.equals(startDate)) start = true;
-            else if (start) {
+            String currentDateValue = dateValues.get(index);
+            long userBaseValue = userBaseValues.get(index);
+            if (currentDateValue.equals(startDateValue)) start = true;
+            if (start) {
                 int percentageIncrease = percentageIncreaseList.get(index);
-                String graphLine = dateValues.get(index) + ": " + (returnNumAsterisks(percentageIncrease)) + " " + percentageIncrease + "%";
+                String graphLine = dateValues.get(index) + ": " + (returnNumAsterisks(divide(userBaseValue)))+
+                        " (" + userBaseValue + ") " + percentageIncrease + "%";
                 resultGraph.add(graphLine);
             }
-            if (currentDate.equals(endDate)) start = false;
+            if (currentDateValue.equals(endDateValue)) start = false;
 
         }
+    }
+
+    public int divide(long num) {
+        String[] digits = String.valueOf(num).split("");
+        int result;
+        if (digits.length >= 3) {
+            result = Integer.parseInt(digits[0] + digits[1]);
+        } else {
+            StringBuilder stringResult = new StringBuilder();
+            for (String digit: digits) stringResult.append(digit);
+           result = Integer.parseInt(stringResult.toString());
+        }
+        return result;
     }
     public List<String> returnResultGraph() {
         return new ArrayList<>(resultGraph);
@@ -84,7 +106,7 @@ public class Graph {
 
     public String graphDateRangeInformation() {
         return "\n***Graph information***\n"+
-                "Start Date: "+startDate+"\n"+
-                "End Date: "+endDate+"\n\n";
+                "Start Date: "+ startDateValue +"\n"+
+                "End Date: "+ endDateValue +"\n\n";
     }
 }
