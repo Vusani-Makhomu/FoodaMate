@@ -92,19 +92,22 @@ public class Graph {
     }
 
     /**
-     * Looking at the user base values, this method calculates the percentage increase.
-     * It begins calculating from the first value.
+     * Using user base values, this method calculates the percentage increase.
+     * Only the user base falling within the specified date range are considered.
      * */
     public void calculatePercentageIncrease() {
         percentageIncreaseList.clear();
         double originalNumber = 0;
         boolean start = false;
         for (int index=0; index<userBaseValues.size(); index++) {
+            // Check if we have reached the start of the date range.
             if (dateValues.get(index).equals(startDateValue)) {
+                // We have reached the start of the range. Make a note of it.
                 start = true;
                 originalNumber = userBaseValues.get(index);
             }
             if (index+1 <= userBaseValues.size() && start) {
+                // Calculate the percentage increase
                 double newNumber = userBaseValues.get(index);
                 double increase = newNumber-originalNumber;
                 double percentageIncrease = (increase/originalNumber) * 100;
@@ -112,20 +115,33 @@ public class Graph {
                 percentageIncreaseList.add(roundedPercentageIncrease);
                 originalNumber = newNumber;
             } else
-                percentageIncreaseList.add(0);
+                percentageIncreaseList.add(0);  // For values that fall outside the date range.
 
+            // We have reached the end of the date range.
             if (dateValues.get(index).equals(endDateValue)) start = false;
         }
     }
 
+    /**
+     * @return The list that contains the values of the percentage increase.
+     * */
     public List<Integer> getPercentageIncreaseList() {
         return new ArrayList<>(percentageIncreaseList);
     }
 
-    public String returnNumAsterisks(int num) {
-        return "*".repeat(num);
+    /**
+     * @param x The number of asterisks to be returned.
+     * @return x number of asterisks.
+     * */
+    public String returnNumAsterisks(int x) {
+        return "*".repeat(x);
     }
 
+    /**
+     * Responsible for plotting each line of the graph.
+     * Plots each line and store it in list.
+     * Only the user base falling within the specified date range is considered.
+     * */
     public void plotGraph() {
         boolean start = false;
         resultGraph.clear();
@@ -146,22 +162,16 @@ public class Graph {
         }
     }
 
-    public int extractFirstTwoDigits(long num) {
-        String[] digits = String.valueOf(num).split("");
-        int result;
-        if (digits.length >= 3) {
-            result = Integer.parseInt(digits[0] + digits[1]);
-        } else {
-            StringBuilder stringResult = new StringBuilder();
-            for (String digit: digits) stringResult.append(digit);
-           result = Integer.parseInt(stringResult.toString());
-        }
-        return result;
-    }
+    /**
+     * @return A list containing each line of the graph.
+     * */
     public List<String> getResultGraph() {
         return new ArrayList<>(resultGraph);
     }
 
+    /**
+     * @return Information about the graph date range.
+     * */
     public String graphDateRangeInformation() {
         return "\n***Graph information***\n"+
                 "Start Date: "+ startDateValue +"\n"+
