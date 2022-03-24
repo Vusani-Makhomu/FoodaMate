@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -27,12 +29,13 @@ public class ParseAPIContentsTest {
                 "06-01-2022=3000", "07-01-2022=3500", "08-01-2022=4000", "09-01-2022=4500", "10-01-2022=5000",
                 "11-01-2022=20000", "12-01-2022=35000", "13-01-2022=46000", "14-01-2022=70000", "15-01-2022=90000"
         };
-        assertEquals(expectedParsedAPIData, parseAPIContents.getParsedApiData());
+        assertEquals(Arrays.toString(expectedParsedAPIData), Arrays.toString(parseAPIContents.getParsedApiData()));
     }
 
     @Test
     @DisplayName("Correctly parse api data? [Test 2]")
     void incorrectlyParseAPIData() {
+        parseAPIContents.parseApiData();
         String[] expectedParsedAPIData = new String[]{
                 "01-01-2022=300"
         };
