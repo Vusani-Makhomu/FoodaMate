@@ -2,6 +2,11 @@ package org.foodamate.careers.com;
 
 import java.util.Arrays;
 
+/**
+ * @author: Vusani Makhomu
+ * @email: makhomuvusani23@gmail.com
+ * This class represents the ParseAPIContents object.
+ * */
 public class ParseAPIContents {
     private String apiData;
     private String[] parsedApiData;

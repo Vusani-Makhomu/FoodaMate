@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+/**
+ * @author: Vusani Makhomu
+ * @email: makhomuvusani23@gmail.com
+ * This class represents the APIConnection object.
+ * */
 public class APIConnection {
     private boolean connected;
     private String apiContents;
